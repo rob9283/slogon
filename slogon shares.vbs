@@ -2,13 +2,12 @@
 '**********************************************************************************
 '**********************************************************************************
 ' 
-' Shares.vbs
+' slogon shares.vbs
 '
 ' A vbscript to map shared folders at logon using simple commands.
 ' Each drive mapping invoked below records an entry in the local Application log.
 ' 
 ' Created by Rob Pennoyer Decemeber 17, 2005.
-' Installed by Rob Pennoyer on [date] for [Client Name]
 ' 
 ' Instructions below.  
 '
@@ -40,7 +39,7 @@ strNetBIOSDomain = "DOMAIN"
 
 '**********************
 '**********************
-'****** Loop required for Win9x clients during logon.  Ignore this
+'****** Loop required for Win9x clients only.  Ignore this
 strNTName = ""
 On Error Resume Next
 Do While strNTName = ""
@@ -62,7 +61,7 @@ Set objUser = GetObject("WinNT://" & strNetBIOSDomain & "/" _
 '**********************************************************************************
 '**********************************************************************************
 ' Edit commands within these bars only.  
-' ***Don't forget to set the NETBIOS domain name up above by the ******************
+' ***Don't forget to set the NETBIOS domain name up above.
 ' There are three commands available for use.  Use them in any combination or
 ' quantity you choose.  
 '
@@ -76,7 +75,7 @@ Set objUser = GetObject("WinNT://" & strNetBIOSDomain & "/" _
 ' Maps a drive letter to a share
 ' Usage:
 ' MapFolder "X:","\\server\share"
-' Note: there is no traling \ charater
+' Note: there is no trailing \ charater
 '
 ' -----> MapHomeFolder DriveLetter,HomeFolderParent <------
 ' Maps a folder and appends the current username.  Example below for a user named
@@ -91,14 +90,19 @@ Set objUser = GetObject("WinNT://" & strNetBIOSDomain & "/" _
 ' Usage:
 ' GroupMapFolder "x:","\\server\share","ExecutiveUsers"
 '
-' Here is an example.  Make sure to remove the comment character ' to use these lines
+
 
 RemoveAllNetworkDrives
 
+'MapFolder "f:","\\fileserver\shared"
 
-'GroupMapFolder "t:","\\discovery\test","TestShareGroup"
+'MapFolder "g:","\\otherserver\public"
 
-'MapHomeFolder "h:","\\discovery\home"
+'GroupMapFolder "t:","\\fileserver\accounting","AccountingGroup"
+
+'MapHomeFolder "h:","\\otherserver\home"
+
+
 
 
 

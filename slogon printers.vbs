@@ -1,25 +1,24 @@
-'*******************************************************************************
-'*** Printer Mapping Logon Script                                              
-'*** Developed by Rob Pennoyer March 2006                                      
-'***                                                                           
-'*** Prepared by [Name]                                                        
-'*** For [Client] [Date]                                                       
-'*******************************************************************************
-
-
-'*******************************************************************************
-'*** Declare Variables, Create Network Object **********************************
-'*******************************************************************************
-'*** This section just creates an instance of the network object and           
-'*** declares some variables.  This section must be included.                  
-'*** Fill in the NETBIOS domain name where it says strNetBIOSDomain="DOMAIN"   
-'*** Make sure to include the double quotes.                                   
-'***                                                                           
+'**********************************************************************************
+'**********************************************************************************
+'**********************************************************************************
+' 
+' slogon printers.vbs
+'
+' A vbscript to map shared folders at logon using simple commands.
+' Each drive mapping invoked below records an entry in the local Application log.
+' 
+' Created by Rob Pennoyer May , 2006.
+' 
+' Instructions below.  
+'
 '*** It's helpful to enable "Point and print restrictions" in group policy in
 '*** both Computer\Policies\Admin\Printers and User\Policies\Admin\Control\Printers
 '*** and to set both "Do not show warning or elevation prompt" items, and make 
 '*** sure the policy applies to both users and computers
-'*******************************************************************************
+'
+'**********************************************************************************
+'**********************************************************************************
+'**********************************************************************************
 
 
 Option Explicit
@@ -54,7 +53,7 @@ strDCSiteName = objADSysInfo.GetDCSiteName(strComputerName)
 '**********************************************************************************
 '**********************************************************************************
 ' Edit commands within these bars only.  
-' ***Don't forget to set the NETBIOS domain name up above by the asterices "******"
+' ***Don't forget to set the NETBIOS domain name up above.
 ' There are three commands available for use.  Use them in any combination or
 ' quantity you choose.  You MUST start with WalkExistingPrinterList.  The rest of 
 ' the commands are self-explanatory.
@@ -70,11 +69,12 @@ WalkExistingPrinterList(REMOVE_NETWORK)
 
 
 
-'MapPrinter "\\172.28.110.19\rpp"
-
+'MapPrinter "\\172.28.110.19\hplj4200"
+'MapPrinter "\\server03\Canon ImageRunner 5135C"
 
 'SetDefaultPrinter "\\server01\HP2200"
 
+'RestoreExistingDefaultPrinter
 
 'ComputerSiteMapPrinter "NYC", "\\server01\hp5660"
 'ComputerSiteSetDefaultPrinter "SecondFloor", "\\server01\colorlaser"
@@ -90,7 +90,6 @@ WalkExistingPrinterList(REMOVE_NETWORK)
 'UserGroupSetDefaultPrinter "autocadusers","\\server05\plotter"
 'UserGroupRestoreExistingDefaultPrinter
 
-RestoreExistingDefaultPrinter
 
 '**********************************************************************************
 '**********************************************************************************
