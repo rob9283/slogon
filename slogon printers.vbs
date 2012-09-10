@@ -7,7 +7,7 @@
 ' A vbscript to map shared folders at logon using simple commands.
 ' Each drive mapping invoked below records an entry in the local Application log.
 ' 
-' Created by Rob Pennoyer May , 2006.
+' Created by Rob Pennoyer, May 2006.
 ' 
 ' Instructions below.  
 '
@@ -54,7 +54,7 @@ strDCSiteName = objADSysInfo.GetDCSiteName(strComputerName)
 '**********************************************************************************
 ' Edit commands within these bars only.  
 ' ***Don't forget to set the NETBIOS domain name up above.
-' There are three commands available for use.  Use them in any combination or
+' There are several commands available for use.  Use them in any combination or
 ' quantity you choose.  You MUST start with WalkExistingPrinterList.  The rest of 
 ' the commands are self-explanatory.
 ' Functions that check group membership check security groups, not OUs.  
@@ -63,9 +63,9 @@ strDCSiteName = objADSysInfo.GetDCSiteName(strComputerName)
 
 
 WalkExistingPrinterList(REMOVE_NETWORK)
-'Arguments:   REMOVE_NETWORK        removes network printers only
-'             REMOVE_ALL            removes all printers
-'             REMOVE_NONE           leaves all printers
+'Arguments:   REMOVE_NETWORK     removes network printers only
+'             REMOVE_ALL         removes all printers
+'             REMOVE_NONE        leaves all printers
 
 
 
@@ -78,17 +78,17 @@ WalkExistingPrinterList(REMOVE_NETWORK)
 
 'ComputerSiteMapPrinter "NYC", "\\server01\hp5660"
 'ComputerSiteSetDefaultPrinter "SecondFloor", "\\server01\colorlaser"
-'ComputerSiteRestoreExistingDefaultPrinter
+'ComputerSiteRestoreExistingDefaultPrinter "default-first-site-name"
 
 
 'ComputerGroupMapPrinter "executivePCs","\\server04\HP5660"
 'ComputerGroupSetDefaultPrinter "accounting", "\\server04\hp5660"
-'ComputerGroupRestoreExistingDefaultPrinter
+'ComputerGroupRestoreExistingDefaultPrinter "AccountingComputers"
 
 
 'UserGroupMapPrinter "autocadusers","\\server05\plotter"
 'UserGroupSetDefaultPrinter "autocadusers","\\server05\plotter"
-'UserGroupRestoreExistingDefaultPrinter
+'UserGroupRestoreExistingDefaultPrinter "ExecutiveUsers"
 
 
 '**********************************************************************************
