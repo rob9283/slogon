@@ -58,12 +58,21 @@ strDCSiteName = objADSysInfo.GetDCSiteName(strComputerName)
 ' quantity you choose.  You MUST start with WalkExistingPrinterList.  The rest of 
 ' the commands are self-explanatory.
 ' Functions that check group membership check security groups, not OUs.  
+' Functions that check site membership go by Active Directory sites.
 ' It is recommended to use computer group membership to map printers, not user groups.
 
 
+'*** The next two lines will force the script to stop before it gets started if the
+'*** computer is not a member of one of the listed security groups.  This is handy
+'*** if you are running the script on a large OU (e.g. Default Domain Policy) and 
+'*** only want to include a subset of PCs.  
+
+'ComputerGroupList=Array("AccountingComputers","SecondFloor")
+'QuitIfNotInTheseComputerGroups(ComputerGroupList)
+
 
 WalkExistingPrinterList(REMOVE_NETWORK)
-'Arguments:   REMOVE_NETWORK     removes network printers only
+'Arguments:   REMOVE_NETWORK     removes network printers only, leaving local printers
 '             REMOVE_ALL         removes all printers
 '             REMOVE_NONE        leaves all printers
 
@@ -96,7 +105,7 @@ WalkExistingPrinterList(REMOVE_NETWORK)
 '**********************************************************************************
 
 '****** Clean up.
-objShell.LogEvent EVENT_INFO, strSCriptName & " script complete." 
+objShell.LogEvent EVENT_INFO, strScriptName & " script complete." 
 Set objNetwork = Nothing
 Set objShell = Nothing
 Set objComputer = Nothing
@@ -285,7 +294,19 @@ Function SetDefaultPrinter(strPrinter)
 
 End Function
 
-
+Sub QuitIfNotInTheseComputerGroups(GroupList)
+	for each GroupName in GroupList
+		if IsComputerMember(GroupName) Then
+			strRunningLog = strRunningLog & "Computer is a member of at least one group: '" & GroupName & "'. Continuing with script." & vbcrlf
+			objShell.LogEvent EVENT_INFO, strRunningLog
+			Exit Sub
+		End If
+	next
+		strRunningLog = strRunningLog & "Computer is not a member of any of the listed groups.  Quitting now." & vbcrlf
+		objShell.LogEvent EVENT_INFO, strRunningLog
+		WScript.Quit
+End Sub	
+			
 
 Function IsComputerMember(strGroup)
     Dim objGroup
